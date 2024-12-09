@@ -1,0 +1,53 @@
+
+
+npm install -g typescript
+npx tsc
+
+npx tsc 01-app.ts   -----> para compilar el archivo
+                           al ejecutarlo se crea automáticamente un archivo javascript
+                           
+ En toda la sección dos he visto los diferentes tipos en typescript como:
+ type, interface
+
+ también merge operators y generics.
+
+ 01-app.ts                       
+
+
+***********************************************
+
+
+
+
+
+
+***********************************************
+
+
+
+
+
+
+***********************************************
+
+
+
+
+
+
+***********************************************
+
+
+
+
+
+
+***********************************************
+
+
+
+
+
+
+***********************************************
+
