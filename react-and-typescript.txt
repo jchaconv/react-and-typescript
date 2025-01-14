@@ -1,4 +1,6 @@
 
+// ALT + SHIFT + F
+
 
 npm install -g typescript
 npx tsc
@@ -16,38 +18,200 @@ npx tsc 01-app.ts   -----> para compilar el archivo
 
 ***********************************************
 
+                    Sección 3
+
+Ejecutar comandos:
+
+    npm create vite@latest react-ts-basics      ---> permite usar plantillas y crea super rápido la estructura del proyecto
+    npm install
+    npm run dev   ---> localhost:5173
 
 
+children props se envía en todos los componentes
+se puede definir en la interface que se toma como props de tipo ReactNode
+
+Otra opción es PropsWithChildren.
 
 
+Se podría usar así:
 
-***********************************************
-
-
-
-
-
-
-***********************************************
+    <img src={image.src} alt={image.alt} />
+    Pero mejor abreviamos:
+    <img {...image} />
 
 
-
-
-
-
-***********************************************
-
-
-
-
-
-
-***********************************************
-
-
-
+Así se especifica el tipo de dato de un useState:
+    const [goals, setGoals] = useState<CourseGoal[]>([]);
 
 
 
 ***********************************************
 
+
+Using useRef()
+
+    const goal = useRef<HTMLInputElement>(null);    ---> se establece el tipo de dato y que inicie con null para evitar errores
+    const enteredGoal = goal.current!.value;        ---> se agrega ! para indicar que ese valor nunca será nulo y evite errores
+    <input id="goal" type="text" ref={goal} />      ---> con ref indicamos que estará guardando propiedades en useRef()
+
+
+para que no se recargue el formulario | form 
+preventDefault
+
+NewGoal.tsx
+
+***********************************************
+
+
+event.currentTarget.reset();  ---> sirve para que en el form los inputs se blanqueen luego de dar submit
+
+
+
+
+*********************************************************************************************************************************************
+                Sección 4: Advanced Component Types - Dynamic Components, Polymorphic Components & More
+*********************************************************************************************************************************************
+
+
+    - Rendering Different Content Based on Props
+    - Building Wrapper Components
+    - Building Polymorphic Components
+    - Forwarding Refs & Exposing Components APIs
+
+
+
+    → De esta manera se especifica que la prop es opcional y que puede ser una de esos valores:
+        
+        severity?: 'low' | 'medium' | 'high',
+
+        El problema de este enfoque es que me puedo olvidar de poner esta prop en algún lugar de la aplicación
+        y no me va a dar error, sin embargo no estaría obteniendo el css style correspondiente:
+
+        <aside className={`infobox infobox-warning warning--${severity}`}>   ---> si no se envía la prop llega como undefined
+
+        La solución a esto es Discriminated Unions. Consiste en crear types distintos y crear uno de la unión de los anteriores:
+
+            type HintBoxProps = {
+                mode: 'hint',
+                children: ReactNode
+            }
+
+            type WarningBoxProps = {
+                mode: 'warning',
+                severity?: 'low' | 'medium' | 'high',
+                children: ReactNode
+            }
+
+            type InfoBoxProps = HintBoxProps | WarningBoxProps; 
+
+        Y se puede desestructurar dependiendo de la necesidad. Muy interesante.
+
+        Ver InfoBox.tsx
+
+
+
+***********************************************
+
+Estamos en 03-adv-components
+
+type InputProps = {
+    label: string;
+    id: string;
+} & ComponentPropsWithoutRef<'input'>   → hacer esto es un merge con las propiedades que tiene un input
+
+Esto se hizo para que en el componente Input(que es un wrapper) se pudiera enviar cualquiera de las props
+que maneja el elemento HTML input, al ser demasiados no era una opción especificar uno por uno, por eso se
+realizó ese merge del type InputProps con ComponentPropsWithoutRef. Y desde App.tsx ya se puede enviar por ejemplo
+type en el Input(wrapper).
+
+
+En Button.tsx se ve Discriminated Union and Combine
+
+
+***********************************************
+
+working with predicates and facing typescript limitations
+
+type ButtonProps = ComponentPropsWithoutRef<'button'> & {
+    href?: never;   ----> se agrega esto para indicar que en este caso no debe tener la prop href.
+                          de esta manera el <Button> donde se ponga href no va a aceptar props del tipo link como disabled.
+};
+
+
+function isAnchorProps(props: ButtonProps | AnchorProps): props is AnchorProps { ---> esto sirve para indicar que si es true es un AnchorProps
+    return 'href' in props;
+}
+
+
+Button.tsx
+
+***********************************************
+
+
+Polymorphic Component
+
+Component es como var en Java. Aquí se está utilizando para retornarlo porque no se puede con una variable con lower camel case.
+
+Imaginemos que en App yo defino que el Container sea un button y quiero enviar onClick. Sin embargo, en Container no está definido que pueda aceptar una prop así.
+Comentarios en el componente.
+
+Container.tsx
+
+***********************************************
+
+Using forwardRef with TypeScript(una de las clases más confusas)
+
+Se modificó Input.tsx se usó forwardRef y es lo que se exporta.
+Con esta sintaxis:
+forwardRef<HTMLInputElement, InputProps>
+
+Typescript entiende que el primer tipo es para el ref y el segundo para las demás props.
+
+
+
+***********************************************
+
+Building Another Wrapper Component (Custom Form Component)
+
+type FormProps = ComponentPropsWithoutRef<'form'> & {
+    onSave: (value: unknown) => void;    → Como no sabemos lo que va a recibir <Form> ponemos unknown
+};
+
+
+return <form {...props} onSubmit={handleSubmit}>{props.children}</form>
+    → y para evitar el error de enviarle ese onSave(que es de tipo unknown) al form de HTML vamos a desestructurar:
+
+    export default function Form({onSave, children, ...otherProps}: FormProps) {...}
+        → de esta forma lo que enviamos a form de HTML son otherProps:
+
+            return <form {...otherProps} onSubmit={handleSubmit}>{children}</form>
+
+
+Form.tsx
+
+***********************************************
+
+61. Exposing Component APIs with useImperativeHandle (with TypeScript)
+
+exponer mi component para que pueda ser utilizado desde afuera
+
+useImperativeHandle() hook para exponer api. solo funciona con forwardRef así que cambiamos la definicion de Form
+
+    - recibe un ref de forwardRef
+    - y también una funcion que retorne otra funcion (basicamente consiste en exponer una funcion)
+
+en el ejemplo se está llamando desde App.tsx
+
+***********************************************
+
+
+***********************************************
+
+
+***********************************************
+
+
+***********************************************
+
+
+***********************************************
