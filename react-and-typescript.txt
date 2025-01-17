@@ -202,10 +202,34 @@ useImperativeHandle() hook para exponer api. solo funciona con forwardRef así q
 
 en el ejemplo se está llamando desde App.tsx
 
-***********************************************
+
+*********************************************************************************************************************************************
+                Sección 5: Advanced Type-Safe State with Context API & useReducer()
+*********************************************************************************************************************************************
+
+Context API para tener datos en toda la aplicación
+(manage cross component state)
+
+Se crea:
+    - Context
+    - funcion ContextProvider
+    - En App se encierra todo en ese ContextProvider
+    - Crear un customHook para no poner toda esa validación en otros componentes
+    - En Header.tsx está como se llama al useContext(). Se está consultado a isRunning para el botón
 
 
 ***********************************************
+
+useReducer()
+
+
+Se crea en timers-context.tsx:
+
+    - initialState
+    - useReducer() → usa un reducer y un initial state
+    - todo está en el TimersContext.tsx
+    - las invocaciones al customHook en los demás componentes.
+
 
 
 ***********************************************

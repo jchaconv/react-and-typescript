@@ -1,13 +1,19 @@
-import Input from "./components/Input";
+/*import Input from "./components/UI/Input";
 import "./App.css";
-import Button from "./components/Button";
-import Container from "./components/Container";
+import Button from "./components/UI/Button";
+import Container from "./components/UI/Container";
 import { useRef } from "react";
-import Form, { type FormHandle } from "./components/Form";
+import Form, { type FormHandle } from "./components/UI/Form";
+*/
+
+import AddTimer from './components/AddTimer.tsx';
+import Header from './components/Header.tsx';
+import Timers from './components/Timers.tsx';
+import TimersContextProvider from './store/TimersContext.tsx';
 
 function App() {
 
-  const customForm = useRef<FormHandle>(null);
+  /*const customForm = useRef<FormHandle>(null);
 
   const input = useRef(null);
 
@@ -15,10 +21,16 @@ function App() {
     const extractedData = data as { name: string; age: string };
     console.log('extractedData', extractedData);
     customForm.current?.clear();
-  }
+  }*/
 
   return (
-    <>
+    <TimersContextProvider>
+      <Header />
+      <main>
+        <AddTimer />
+        <Timers />
+      </main>
+      {/*   Toda la sección 4
       <main>
         <Input id="name" label="Your name" type="text" />
         <Input id="age" label="Your age" type="number" />
@@ -40,7 +52,8 @@ function App() {
           <Button>Save</Button>
         </p>
       </Form>
-    </>
+      */}
+    </TimersContextProvider>
   )
 }
 
