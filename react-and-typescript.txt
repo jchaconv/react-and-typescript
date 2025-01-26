@@ -1,6 +1,10 @@
 
+
+https://github.com/academind/react-typescript-course-resources
+
 // ALT + SHIFT + F
 
+Para ejecutar archivo individual:
 
 npm install -g typescript
 npx tsc
@@ -19,6 +23,8 @@ npx tsc 01-app.ts   -----> para compilar el archivo
 ***********************************************
 
                     Sección 3
+
+Para iniciar proyecto:                    
 
 Ejecutar comandos:
 
@@ -234,8 +240,50 @@ Se crea en timers-context.tsx:
 
 ***********************************************
 
+Side Effect
+
+    - StricMode hace que cada componente en la aplicación se ejecute dos veces
+
 
 ***********************************************
+
+Para hacer que todos los timers inicien o se detengan según los botonos Start timer o Stop timer:
+
+    - acceder al context mediante hook personalizado useTimersContext()
+    - obtener la variable isRunning.
+
+
+    Todo está en Timer.tsx
+
+
+
+***********************************************
+
+Data fetching
+
+    - Zod para reconocer el tipo de data que viene de una llamada http
+      puede ser interesante investigar más.
+
+    - 
+
+
+
+
+
+
+***********************************************
+
+
+
+
+
+
+***********************************************
+
+
+
+
+
 
 
 ***********************************************
