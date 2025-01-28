@@ -264,7 +264,27 @@ Data fetching
     - Zod para reconocer el tipo de data que viene de una llamada http
       puede ser interesante investigar más.
 
-    - 
+    - toda la seccion se hizo con fetch y algo muy básico de como esperar la respuesta
+      y mostrar un componente en caso de Error y un isLoading.
+
+
+
+
+***********************************************************************
+                            Sección 7 : Redux
+***********************************************************************
+
+05-redux-project
+
+Setup Redux:
+
+    - npm install @reduxjs/toolkit react-redux
+    - visit the oficial docs of redux
+    - todo seteado para ver la manera de trabajr con redux.
+
+
+***********************************************
+
 
 
 
@@ -276,6 +296,16 @@ Data fetching
 
 
 
+***********************************************
+
+
+
+
+
+
+
+***********************************************
+
 
 
 ***********************************************
@@ -287,3 +317,4 @@ Data fetching
 
 
 ***********************************************
+
